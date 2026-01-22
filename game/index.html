@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dodge Game - Three.js</title>
+</head>
+
+<body>
+  <div id="ui">
+    <div id="hud">
+      <div class="hud-row">
+        <span class="label">HP</span>
+        <div class="bar">
+          <div id="health-fill"></div>
+        </div>
+        <span id="health-text">100 / 100</span>
+      </div>
+      <div class="hud-row">
+        <span class="label">XP</span>
+        <div class="bar xp">
+          <div id="xp-fill"></div>
+        </div>
+        <span id="xp-text">Lv 1</span>
+      </div>
+      <div class="hud-row stats">
+        <span id="level">Level 1</span>
+        <span id="wave">Wave 1</span>
+        <span id="kills">Kills 0</span>
+      </div>
+    </div>
+    <div id="instructions">WASD/Arrows to move • Auto-aim fires at the nearest enemy</div>
+    <div id="upgrade-modal" style="display: none;">
+      <div class="upgrade-panel">
+        <h2>Level Up! Choose an Upgrade</h2>
+        <div id="upgrade-choices" class="upgrade-choices"></div>
+      </div>
+    </div>
+    <div id="game-over" style="display: none;">
+      <h1>Run Ended</h1>
+      <p>Level: <span id="final-level">1</span></p>
+      <p>Kills: <span id="final-kills">0</span></p>
+      <button id="restart-btn">Restart</button>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
