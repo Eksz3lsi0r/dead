@@ -123,8 +123,8 @@ export class Player {
     // Keep player on ground
     this.mesh.position.y = 0.5;
 
-    // Boundary constraints
-    const boundary = 24;
+    // Boundary constraints (etwas kleiner als Wände bei 25)
+    const boundary = 22;
     this.mesh.position.x = Math.max(-boundary, Math.min(boundary, this.mesh.position.x));
     this.mesh.position.z = Math.max(-boundary, Math.min(boundary, this.mesh.position.z));
 

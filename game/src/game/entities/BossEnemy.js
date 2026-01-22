@@ -11,6 +11,12 @@ export class BossEnemy {
     this.damage = options.damage ?? 20;
     this.isActive = true;
 
+    // Status-Effekte
+    this.slowTimeRemaining = 0;
+    this.slowFactor = 1;
+    this.burnTimeRemaining = 0;
+    this.burnDps = 0;
+
     this.createMesh();
     this.spawnAtRing(options.spawnRadius ?? 26, options.variance ?? 6);
   }
@@ -46,10 +52,24 @@ export class BossEnemy {
     const distance = toPlayer.length();
     if (distance > 0.001) {
       toPlayer.normalize();
-      this.mesh.position.addScaledVector(toPlayer, this.speed * delta);
+      const slowMul = this.slowTimeRemaining > 0 ? this.slowFactor : 1;
+      this.mesh.position.addScaledVector(toPlayer, this.speed * slowMul * delta);
     }
 
     this.mesh.position.y = 0.5;
+
+    // Burn-Tick
+    if (this.burnTimeRemaining > 0 && this.burnDps > 0) {
+      this.applyDamage(this.burnDps * delta);
+      this.burnTimeRemaining = Math.max(0, this.burnTimeRemaining - delta);
+    }
+    // Slow abklingen
+    if (this.slowTimeRemaining > 0) {
+      this.slowTimeRemaining = Math.max(0, this.slowTimeRemaining - delta);
+      if (this.slowTimeRemaining === 0) {
+        this.slowFactor = 1;
+      }
+    }
 
     // Rotation für visuellen Effekt
     this.mesh.rotation.x += delta * 0.5;
@@ -61,5 +81,17 @@ export class BossEnemy {
     if (this.health <= 0) {
       this.isActive = false;
     }
+  }
+
+  applySlow(factor, duration) {
+    if (duration <= 0) return;
+    this.slowFactor = Math.min(this.slowFactor, factor);
+    this.slowTimeRemaining = Math.max(this.slowTimeRemaining, duration);
+  }
+
+  applyBurn(dps, duration) {
+    if (duration <= 0 || dps <= 0) return;
+    this.burnDps = Math.max(this.burnDps, dps);
+    this.burnTimeRemaining = Math.max(this.burnTimeRemaining, duration);
   }
 }
