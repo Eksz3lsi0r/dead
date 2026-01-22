@@ -17,6 +17,8 @@ export class Enemy {
     this.burnTimeRemaining = 0;
     this.burnDps = 0;
 
+    this.coinValue = options.coinValue ?? 10; // Coins dropped by this enemy
+
     this.createMesh();
     this.spawnAtRing(options.spawnRadius ?? 26, options.variance ?? 6);
   }
@@ -74,6 +76,7 @@ export class Enemy {
     this.health -= amount;
     if (this.health <= 0) {
       this.isActive = false;
+      this.defeat(this.player);
     }
   }
 
@@ -87,5 +90,10 @@ export class Enemy {
     if (duration <= 0 || dps <= 0) return;
     this.burnDps = Math.max(this.burnDps, dps);
     this.burnTimeRemaining = Math.max(this.burnTimeRemaining, duration);
+  }
+
+  defeat(player) {
+    player.addCoins(this.coinValue); // Add coins to player
+    // Additional logic for enemy defeat can be added here
   }
 }

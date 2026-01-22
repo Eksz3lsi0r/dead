@@ -129,6 +129,17 @@ document.getElementById('restart-btn').addEventListener('click', () => {
   initGame();
 });
 
+// Shop button
+document.getElementById('shopButton').addEventListener('click', function () {
+  // Logic to open the shop interface
+  openShop();
+});
+
+function openShop() {
+  // Implement the shop opening logic here
+  console.log("Shop opened");
+}
+
 // Start initial game
 initGame();
 

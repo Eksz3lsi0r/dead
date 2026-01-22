@@ -67,6 +67,8 @@ export class Player {
     this.autoCastCooldown = 3.5;
     this.autoCastTimer = this.autoCastCooldown;
 
+    this.coins = 0; // Initialize coins
+
     this.createMesh();
   }
 
@@ -382,5 +384,15 @@ export class Player {
     this.isAlive = false;
     // Visual feedback
     this.mesh.material.color.setHex(0xe74c3c);
+  }
+
+  addCoins(amount) {
+    this.coins += amount; // Add coins
+    this.updateCoinDisplay(); // Update the display
+  }
+
+  updateCoinDisplay() {
+    // Logic to update the UI display for coins
+    document.getElementById('coinDisplay').innerText = `Coins: ${this.coins}`;
   }
 }
